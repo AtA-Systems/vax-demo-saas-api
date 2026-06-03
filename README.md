@@ -10,6 +10,18 @@ This repository is meant to be the public demo app for VAX. It is intentionally 
 
 This app is intentionally designed to include simplified security issues for demonstration and scanning purposes. It should **not** be used as production code.
 
+Seeded demo issues include:
+
+- overly permissive CORS (`Access-Control-Allow-Origin: *`)
+- no rate limiting on authentication-style endpoints
+- weak session handling and passwordless demo login
+- predictable magic-link generation and acceptance
+- unsafe error details and stack trace exposure
+- missing audit logging around authentication and exports
+- overly broad authorization checks on admin-style export endpoints
+- secrets-like config patterns and hard-coded fallback keys
+- missing production-grade security-header hardening
+
 ## What the app does
 
 The demo API exposes a few simple endpoints:

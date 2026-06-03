@@ -54,3 +54,50 @@ test('POST /assessments validates required fields', async () => {
     });
   });
 });
+
+test('POST /auth/magic-link returns a predictable demo link and permissive CORS header', async () => {
+  await withServer(async (baseUrl) => {
+    const response = await fetch(`${baseUrl}/auth/magic-link`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ email: 'founder@example.com' })
+    });
+
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get('access-control-allow-origin'), '*');
+    const payload = await response.json();
+    assert.equal(payload.email, 'founder@example.com');
+    assert.match(payload.magicLink, /^https:\/\/demo\.vax\.local\/magic\//);
+    assert.match(payload.note, /without rate limiting or expiry/i);
+  });
+});
+
+test('GET /admin/customers/export exposes customer data with only a demo header', async () => {
+  await withServer(async (baseUrl) => {
+    const response = await fetch(`${baseUrl}/admin/customers/export`, {
+      headers: {
+        'x-demo-user': 'analyst@example.com'
+      }
+    });
+
+    assert.equal(response.status, 200);
+    const payload = await response.json();
+    assert.equal(payload.requestedBy, 'analyst@example.com');
+    assert.equal(Array.isArray(payload.customers), true);
+    assert.equal(payload.customers.length, 2);
+    assert.equal(typeof payload.internalApiKeyPreview, 'string');
+  });
+});
+
+test('GET /crash leaks stack traces and request details', async () => {
+  await withServer(async (baseUrl) => {
+    const response = await fetch(`${baseUrl}/crash`);
+    assert.equal(response.status, 500);
+    const payload = await response.json();
+    assert.match(payload.error, /internal api key/i);
+    assert.equal(payload.path, '/crash');
+    assert.match(payload.stack, /Error: Demo crash/);
+  });
+});
