@@ -1,3 +1,5 @@
+[![VAX assurance](https://vax.ata.systems/badge.svg?jobId=mJZbTW8XSOc8Ujtxztdy)](https://vax.ata.systems/badges/mJZbTW8XSOc8Ujtxztdy/latest)
+
 # vax-demo-saas-api
 
 A small demo SaaS API repository for showing the VAX workflow end to end.
@@ -10,6 +12,8 @@ This repository is meant to be the public demo app for VAX. It is intentionally 
 ## Links
 
 - Product site: https://vax.ata.systems
+- Sample VAX report: https://vax.ata.systems/runs/mJZbTW8XSOc8Ujtxztdy/89DBPnBIyIig2pABgIMH
+- Latest VAX badge page: https://vax.ata.systems/badges/mJZbTW8XSOc8Ujtxztdy/latest
 - GitHub Marketplace listing: https://github.com/marketplace/actions/vax-evidence-scan
 
 ## Important demo note
@@ -47,6 +51,14 @@ npm start
 ```
 
 By default the API listens on `http://localhost:3000`.
+
+## Sample report
+
+The real generated VAX report for this demo repository is published here:
+
+- https://vax.ata.systems/runs/mJZbTW8XSOc8Ujtxztdy/89DBPnBIyIig2pABgIMH
+
+The README badge at the top of this file points to the latest public badge page for the same VAX job.
 
 ## Repository structure
 
